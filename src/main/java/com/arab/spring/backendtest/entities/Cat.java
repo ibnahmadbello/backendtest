@@ -2,11 +2,20 @@ package com.arab.spring.backendtest.entities;
 
 import java.sql.Timestamp;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Cat {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String cat_name;
 	private Timestamp time_fed;
+	private String feeder_name;
 
 	public Long getId() {
 		return id;
@@ -30,5 +39,13 @@ public class Cat {
 
 	public void setTime_fed(Timestamp time_fed) {
 		this.time_fed = time_fed;
+	}
+
+	public String getFeeder_name() {
+		return feeder_name;
+	}
+
+	public void setFeeder_name(String feeder_name) {
+		this.feeder_name = feeder_name;
 	}
 }
