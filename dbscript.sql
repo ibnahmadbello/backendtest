@@ -14,18 +14,6 @@ create table cat
 (
 id int not null auto_increment,
 cat_name varchar(50),
-time_fed timestamp default current_timestamp
-
+time_fed timestamp default current_timestamp,
+feeder_name varchar(50)
 );
-
-
-
-(
-ID INT NOT NULL AUTO_INCREMENT,
-FIRST_NAME VARCHAR(20),
-LAST_NAME VARCHAR(20),
-EMAIL VARCHAR(20),
-PASSWORD VARCHAR(256), 
-PRIMARY KEY (ID),
-UNIQUE KEY (EMAIL)
-)
