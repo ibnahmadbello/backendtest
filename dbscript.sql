@@ -16,13 +16,3 @@ cat_name varchar(50),
 time_fed timestamp default current_timestamp,
 feeder_name varchar(50)
 );
-
-
-select * from cat;
-drop table cat
-datediff(hour, current_timestamp, current_time);
-select hour(current_time());
-select extract(hour from current_timestamp);
-insert into cat;
-
-SELECT timestamp;
