@@ -11,6 +11,9 @@ public interface CatRepository extends JpaRepository<Cat, Long> {
 
 
 	@Query("from Cat where (hour(current_time) - (extract(hour from time_fed))) > 4")
-	List<Cat> findHungryCat();
+	public List<Cat> findHungryCat();
+
+	@Query("select feeder_name, count(feeder_name) from Cat group by feeder_name")
+	public List<Object[]> getFeedersReport();
 
 }

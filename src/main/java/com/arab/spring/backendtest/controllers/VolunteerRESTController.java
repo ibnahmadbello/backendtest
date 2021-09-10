@@ -42,5 +42,4 @@ public class VolunteerRESTController {
 		return volunteerRepository.save(volunteer);
 	}
 	
-//	generateReport(){}
 }

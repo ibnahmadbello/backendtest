@@ -1,10 +1,12 @@
 package com.arab.spring.backendtest.controllers;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonObjectSerializer;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.arab.spring.backendtest.entities.Cat;
 import com.arab.spring.backendtest.repos.CatRepository;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -47,7 +51,7 @@ public class CatRESTController {
 	@GetMapping("/{id}")
 	public Cat getSingleCat(@PathVariable("id") Long id) {
 		LOGGER.info("Method getSingleCat is called");
-		return catRepository.getById(id);
+		return catRepository.findById(id).get();
 	}
 
 	@PostMapping
@@ -62,10 +66,11 @@ public class CatRESTController {
 		return catRepository.save(cat);
 	} 
 	
-	
+	@GetMapping
+	@RequestMapping("/getcatreport")
 	public ObjectNode generateReport(@PathVariable("id") Long id){
 		LOGGER.info("Generating report for cat." + id);
-		Cat singleCat = catRepository.getById(id);
+		Cat singleCat = catRepository.findById(id).get();
 		ObjectNode objectNode = objectMapper.createObjectNode();
 		objectNode.put("id", singleCat.getId());
 		objectNode.put("cat_name", singleCat.getCat_name());
@@ -75,4 +80,13 @@ public class CatRESTController {
 		
 	}
 	
+	@GetMapping
+	@RequestMapping("/feeders")
+	public JsonNode getFeedersReport(){
+		LOGGER.info("Generating report for volunteer.");
+		List<Object[]> report = catRepository.getFeedersReport();
+		JsonNode node = objectMapper.valueToTree(report);
+		return node;
+		
+	}
 }
