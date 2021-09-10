@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,7 +50,16 @@ public class CatRESTController {
 		LOGGER.info("Method addCat is called");
 		return catRepository.save(cat);
 	}
+
+	@PutMapping
+	@RequestMapping("/feedCat")
+	public Cat feedCat(@RequestBody Cat cat){
+		return catRepository.save(cat);
+	} 
 	
-//	feedCat(){} 
-	//TODO update the cat feeding
+	
+	public void generateReport(Cat cat){
+		
+	}
+	//TODO generate report for a cat
 }

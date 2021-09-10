@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.arab.spring.backendtest.entities.Cat;
 import com.arab.spring.backendtest.entities.Volunteer;
 import com.arab.spring.backendtest.repos.VolunteerRepository;
 
@@ -42,4 +41,6 @@ public class VolunteerRESTController {
 		LOGGER.info("Adding volunteer");
 		return volunteerRepository.save(volunteer);
 	}
+	
+//	generateReport(){}
 }
