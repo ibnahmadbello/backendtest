@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.arab.spring.backendtest.entities.Cat;
 import com.arab.spring.backendtest.repos.CatRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @RestController
 @RequestMapping("/cats")
@@ -24,6 +26,9 @@ public class CatRESTController {
 
 	@Autowired
 	CatRepository catRepository;
+	
+	@Autowired
+	ObjectMapper objectMapper;
 	
 	@GetMapping
 	public List<Cat> getAllCat(){
@@ -42,7 +47,7 @@ public class CatRESTController {
 	@GetMapping("/{id}")
 	public Cat getSingleCat(@PathVariable("id") Long id) {
 		LOGGER.info("Method getSingleCat is called");
-		return catRepository.findById(id).get();
+		return catRepository.getById(id);
 	}
 
 	@PostMapping
@@ -58,8 +63,16 @@ public class CatRESTController {
 	} 
 	
 	
-	public void generateReport(Cat cat){
+	public ObjectNode generateReport(@PathVariable("id") Long id){
+		LOGGER.info("Generating report for cat." + id);
+		Cat singleCat = catRepository.getById(id);
+		ObjectNode objectNode = objectMapper.createObjectNode();
+		objectNode.put("id", singleCat.getId());
+		objectNode.put("cat_name", singleCat.getCat_name());
+		objectNode.put("time_fed", singleCat.getTime_fed().toString());
+		objectNode.put("who_fed_it", singleCat.getFeeder_name());
+		return objectNode;
 		
 	}
-	//TODO generate report for a cat
+	
 }

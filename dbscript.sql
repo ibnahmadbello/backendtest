@@ -23,3 +23,6 @@ drop table cat
 datediff(hour, current_timestamp, current_time);
 select hour(current_time());
 select extract(hour from current_timestamp);
+insert into cat;
+
+SELECT timestamp;
