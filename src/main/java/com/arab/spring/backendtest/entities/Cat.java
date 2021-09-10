@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.UpdateTimestamp;
+
 @Entity
 public class Cat {
 
@@ -14,6 +16,7 @@ public class Cat {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String cat_name;
+	@UpdateTimestamp
 	private Timestamp time_fed;
 	private String feeder_name;
 

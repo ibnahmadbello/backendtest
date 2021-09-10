@@ -26,26 +26,29 @@ public class CatRESTController {
 	
 	@GetMapping
 	public List<Cat> getAllCat(){
-		LOGGER.info("msg", "Method getAllCats is called");
+		LOGGER.info("Method getAllCats is called");
 		return catRepository.findAll();
 	}
 	
 	
-//	@GetMapping
-//	public List<Cat> getHungryCats(){
-//		LOGGER.info("msg", "Method getHungryCats is called");
-//		return catRepository.findAll();
-//	}
+	@GetMapping
+	public List<Cat> getHungryCats(){
+		LOGGER.info("Method getHungryCats is called");
+		return catRepository.findHungryCat();
+	}
 	
 	@GetMapping("/{id}")
 	public Cat getSingleCat(@PathVariable("id") Long id) {
-		LOGGER.info("msg", "Method getSingleCat is called");
+		LOGGER.info("Method getSingleCat is called");
 		return catRepository.findById(id).get();
 	}
 
 	@PostMapping
 	public Cat addCat(@RequestBody Cat cat) {
-		LOGGER.info("msg", "Method addCat is called");
+		LOGGER.info("Method addCat is called");
 		return catRepository.save(cat);
 	}
+	
+//	feedCat(){} 
+	//TODO update the cat feeding
 }
