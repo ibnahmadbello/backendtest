@@ -1,12 +1,10 @@
 package com.arab.spring.backendtest.controllers;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jackson.JsonObjectSerializer;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arab.spring.backendtest.entities.Cat;
+import com.arab.spring.backendtest.entities.Volunteer;
 import com.arab.spring.backendtest.repos.CatRepository;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.arab.spring.backendtest.repos.VolunteerRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -30,6 +29,9 @@ public class CatRESTController {
 
 	@Autowired
 	CatRepository catRepository;
+	
+	@Autowired
+	VolunteerRepository volunteerRepository;
 	
 	@Autowired
 	ObjectMapper objectMapper;
@@ -61,13 +63,18 @@ public class CatRESTController {
 	}
 
 	@PutMapping
-	@RequestMapping("/feedCat")
-	public Cat feedCat(@RequestBody Cat cat){
-		return catRepository.save(cat);
+	@RequestMapping("/feedCat/{id}")
+	public Cat feedCat(@PathVariable("id") Long id){
+		LOGGER.info("Method feedCat is feeding the cat.");
+		Cat feedCat = catRepository.findById(id).get();
+		String feeder_name = feedCat.getFeeder_name();
+		Volunteer volunteer = volunteerRepository.findByName(feeder_name);
+		volunteer.setNumber_fed(volunteer.getNumber_fed() + 1);
+		return catRepository.save(feedCat);
 	} 
 	
 	@GetMapping
-	@RequestMapping("/getcatreport")
+	@RequestMapping("/getcatreport/{id}")
 	public ObjectNode generateReport(@PathVariable("id") Long id){
 		LOGGER.info("Generating report for cat." + id);
 		Cat singleCat = catRepository.findById(id).get();
