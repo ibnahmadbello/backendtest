@@ -32,6 +32,7 @@ public class CatRESTController {
 	
 	
 	@GetMapping
+	@RequestMapping("/hungrycats")
 	public List<Cat> getHungryCats(){
 		LOGGER.info("Method getHungryCats is called");
 		return catRepository.findHungryCat();
